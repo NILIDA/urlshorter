@@ -10,7 +10,7 @@ docker run -d --name postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=pas
 ## Подключение приложения
 docker run -d -p 8080:8080 --name url-shortener nilidushka/urlsh:latest -storage=postgres -pg-conn="postgres://postgres:password@host.docker.internal:5432/shortener?sslmode=disable"
 
-#В случае ошибки с PostgreSQL
+# В случае ошибки с PostgreSQL
 ## Создать сеть
 docker network create shortener-network
 ## PostgreSQL
