@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: shortener
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d shortener"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - shortener-network
+
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    command: ["-storage=postgres", "-pg-conn=postgres://postgres:password@postgres:5432/shortener?sslmode=disable"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - shortener-network
+
+volumes:
+  pg_data:
+
+networks:
+  shortener-network:
+    driver: bridge

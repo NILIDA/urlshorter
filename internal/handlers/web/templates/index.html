@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Укорачиватель ссылок</title>
+</head>
+<body>
+    <h1>Укорачиватель ссылок</h1>
+    
+    <form action="/shorten" method="POST">
+        <textarea name="url" placeholder="Введите ссылку или короткий код" rows="3">{{.InputURL}}</textarea>
+        <br><br>
+        <button type="submit" name="action" value="shorten">Сократить</button>
+        <button type="submit" name="action" value="expand">Восстановить</button>
+    </form>
+    
+    {{if .Result}}
+    <div>
+        <h3>Результат:</h3>
+        <p>{{.Result}}</p>
+    </div>
+    {{end}}
+    
+    {{if .Error}}
+    <div style="color: red;">
+        <p>{{.Error}}</p>
+    </div>
+    {{end}}
+    
+    <hr>
+    <p>Примеры: https://google.com или aB3_xY7z_1</p>
+</body>
+</html>
